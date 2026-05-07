@@ -653,10 +653,25 @@
 
       .nav {
         min-height: 68px;
+        gap: 10px; /* Ajuste para evitar sobreposição */
       }
 
       .brand {
-        font-size: 1.25rem;
+        font-size: 1.1rem; /* Reduz fonte da logo */
+        gap: 8px;
+      }
+
+      .brand-img {
+        height: 32px; /* Reduz ligeiramente a imagem da logo */
+      }
+
+      .topbar .btn {
+        padding: 10px 14px; /* Botão mais compacto no topo */
+        font-size: 0.85rem;
+      }
+
+      .hide-mobile {
+        display: none; /* Esconde texto não essencial no botão em telas menores */
       }
 
       .hero {
@@ -674,7 +689,8 @@
         display: grid;
       }
 
-      .btn {
+      /* Removendo a regra de width: 100% que forçava todos os botões a ficarem largos, para não afetar o topo */
+      .hero-actions .btn {
         width: 100%;
       }
 
@@ -722,7 +738,7 @@
 
       <a class="btn btn-primary" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20quero%20colocar%20minha%20empresa%20no%20Google%20Maps." target="_blank" onclick="window.dataLayer.push({'event': 'whatsapp_click', 'location': 'Botão Topo'});">
         <i class="fa-brands fa-whatsapp"></i>
-        Falar agora
+        Falar<span class="hide-mobile"> agora</span>
       </a>
     </div>
   </header>
