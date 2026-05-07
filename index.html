@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAPAMAX | Sua empresa no Google Maps</title>
+  <meta name="description" content="A MAPAMAX cadastra e otimiza empresas no Google Maps e na Pesquisa Google para aumentar visibilidade, ligações, rotas e clientes." />
+  <meta name="theme-color" content="#0b0f19" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --blue: #1a73e8;
+      --red: #ea4335;
+      --yellow: #fbbc04;
+      --green: #34a853;
+      --dark: #0b0f19;
+      --dark-2: #111827;
+      --text: #111827;
+      --muted: #6b7280;
+      --light: #f8fafc;
+      --white: #ffffff;
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 24px 70px rgba(15, 23, 42, .18);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(255,255,255,.88);
+      border-bottom: 1px solid rgba(15,23,42,.08);
+    }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      font-size: 1.55rem;
+    }
+
+    .brand-img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand span:nth-child(1) { color: var(--blue); }
+    .brand span:nth-child(2) { color: var(--red); }
+    .brand span:nth-child(3) { color: var(--yellow); }
+    .brand span:nth-child(4) { color: var(--green); }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-weight: 700;
+      font-size: .94rem;
+      color: #334155;
+    }
+
+    .menu a:hover {
+      color: var(--blue);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 14px 22px;
+      transition: .25s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--blue), #0b57d0);
+      box-shadow: 0 16px 30px rgba(26,115,232,.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 38px rgba(26,115,232,.34);
+    }
+
+    .btn-dark {
+      color: white;
+      background: var(--dark);
+    }
+
+    .btn-light {
+      color: var(--dark);
+      background: white;
+      border: 1px solid rgba(15,23,42,.08);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(26,115,232,.35), transparent 32%),
+        radial-gradient(circle at 85% 20%, rgba(251,188,4,.24), transparent 30%),
+        linear-gradient(135deg, #07111f 0%, #0b0f19 55%, #111827 100%);
+      padding: 88px 0 74px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      color: #dbeafe;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.45rem, 5vw, 5.1rem);
+      line-height: .98;
+      letter-spacing: -0.06em;
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 strong {
+      background: linear-gradient(90deg, var(--blue), var(--red), var(--yellow), var(--green));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #d1d5db;
+      font-size: 1.13rem;
+      max-width: 620px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 650px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .stat i {
+      color: var(--yellow);
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 1.05rem;
+    }
+
+    .stat small {
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+
+    .phone-card {
+      position: relative;
+      padding: 24px;
+      border-radius: 36px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: var(--shadow);
+    }
+
+    .business-card {
+      background: white;
+      color: var(--text);
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.28);
+    }
+
+    .mock-map {
+      height: 190px;
+      border-radius: 22px;
+      margin: 18px 0;
+      background:
+        linear-gradient(135deg, rgba(26,115,232,.14), rgba(52,168,83,.16)),
+        repeating-linear-gradient(45deg, #e5e7eb 0 2px, transparent 2px 24px),
+        #f1f5f9;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mock-map::after {
+      content: "\f3c5";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      color: var(--red);
+      font-size: 3rem;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -60%);
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,.2));
+    }
+
+    .business-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .stars {
+      color: #f59e0b;
+      font-size: .95rem;
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .action {
+      text-align: center;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: .78rem;
+      padding: 10px 6px;
+      border-radius: 14px;
+      background: #eff6ff;
+    }
+
+    .action i {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    section {
+      padding: 86px 0;
+    }
+
+    .section-head {
+      max-width: 740px;
+      margin-bottom: 42px;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+      color: #0f172a;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-top: 14px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 18px 50px rgba(15,23,42,.08);
+      border: 1px solid rgba(15,23,42,.06);
+      transition: .25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 65px rgba(15,23,42,.12);
+    }
+
+    .icon-box {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      color: white;
+      font-size: 1.35rem;
+      margin-bottom: 18px;
+    }
+
+    .bg-blue { background: var(--blue); }
+    .bg-red { background: var(--red); }
+    .bg-yellow { background: var(--yellow); color: #111827; }
+    .bg-green { background: var(--green); }
+
+    .card h3 {
+      font-size: 1.22rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .steps {
+      background: white;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      position: relative;
+      background: #f8fafc;
+      border-radius: var(--radius);
+      padding: 26px;
+      border: 1px solid rgba(15,23,42,.06);
+    }
+
+    .step-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--dark);
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .benefits-panel {
+      border-radius: 36px;
+      padding: 36px;
+      color: white;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(251,188,4,.28), transparent 28%),
+        linear-gradient(135deg, #0b0f19, #111827);
+      box-shadow: var(--shadow);
+    }
+
+    .check-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+    }
+
+    .check-item i {
+      color: var(--green);
+      font-size: 1.25rem;
+      margin-top: 3px;
+    }
+
+    /* Pricing Section Styles */
+    .pricing-section {
+      background: #f8fafc;
+    }
+    
+    .price-card-wrapper {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .price-card {
+      background: white;
+      border-radius: 36px;
+      padding: 46px 36px;
+      box-shadow: 0 24px 70px rgba(15, 23, 42, .12);
+      border: 1px solid rgba(15,23,42,.06);
+      border-top: 8px solid var(--blue);
+      text-align: center;
+    }
+
+    .price {
+      font-size: 3.8rem;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -.05em;
+      margin: 18px 0 8px;
+      color: #0f172a;
+    }
+
+    .price span {
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 0;
+      font-weight: 700;
+    }
+
+    .ownership-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #dcfce7;
+      color: #166534;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .mini-list {
+      margin: 24px 0;
+      display: grid;
+      gap: 14px;
+      color: #334155;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .mini-list div {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .mini-list i {
+      color: var(--green);
+      font-size: 1.1rem;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 40;
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #25d366;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 18px 40px rgba(37,211,102,.38);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,.45), 0 18px 40px rgba(37,211,102,.38); }
+      70% { box-shadow: 0 0 0 18px rgba(37,211,102,0), 0 18px 40px rgba(37,211,102,.38); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0), 0 18px 40px rgba(37,211,102,.38); }
+    }
+
+    .cta {
+      color: white;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(234,67,53,.22), transparent 30%),
+        radial-gradient(circle at 80% 0%, rgba(251,188,4,.22), transparent 26%),
+        linear-gradient(135deg, #0b0f19, #111827);
+      padding: 80px 0;
+    }
+
+    .cta-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .cta h2 {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -.05em;
+      max-width: 730px;
+    }
+
+    .cta p {
+      color: #cbd5e1;
+      margin-top: 12px;
+      font-size: 1.05rem;
+    }
+
+    footer {
+      background: #050814;
+      color: #cbd5e1;
+      padding: 38px 0;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-weight: 700;
+    }
+
+    .contact-line i {
+      color: var(--yellow);
+      margin-right: 6px;
+    }
+
+    @media (max-width: 920px) {
+      .menu {
+        display: none;
+      }
+
+      .hero-grid,
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .services-grid,
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cta-box {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 22px, 1160px);
+      }
+
+      .nav {
+        min-height: 68px;
+      }
+
+      .brand {
+        font-size: 1.25rem;
+      }
+
+      .hero {
+        padding: 64px 0 58px;
+      }
+
+      .hero-actions,
+      .stats,
+      .services-grid,
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        display: grid;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      section {
+        padding: 62px 0;
+      }
+
+      .card,
+      .benefits-panel,
+      .price-card {
+        padding: 24px;
+      }
+
+      .action-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="whatsapp-float" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20tenho%20interesse%20em%20cadastrar%20minha%20empresa%20no%20Google%20Maps." target="_blank" aria-label="Falar no WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#inicio" class="brand" aria-label="MAPAMAX">
+        <!-- Substituímos o ícone de CSS pela imagem do seu logo -->
+        <img src="logo.png" alt="MAPAMAX" class="brand-img" onerror="this.style.display='none'">
+        <!-- Caso a imagem falhe (se esquecer de salvar o arquivo logo.png), o texto abaixo aparece -->
+        <div><span>MAPA</span><span>M</span><span>A</span><span>X</span></div>
+      </a>
+
+      <nav class="menu" aria-label="Menu principal">
+        <a href="#servicos">Serviços</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#investimento">Investimento</a>
+      </nav>
+
+      <a class="btn btn-primary" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20quero%20colocar%20minha%20empresa%20no%20Google%20Maps." target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+        Falar agora
+      </a>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge"><i class="fa-solid fa-map-location-dot"></i> Agência de Marketing Local</div>
+          <h1>Sua empresa no topo do <strong>Google Maps</strong></h1>
+          <p>
+            Cadastramos, configuramos e otimizamos seu Perfil da Empresa no Google para que seu negócio seja encontrado por clientes próximos, gere mais chamadas, rotas e oportunidades.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20servi%C3%A7o%20da%20MAPAMAX." target="_blank">
+              <i class="fa-brands fa-whatsapp"></i> Solicitar atendimento
+            </a>
+            <a class="btn btn-light" href="#investimento">
+              Ver investimento <i class="fa-solid fa-arrow-down"></i>
+            </a>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <i class="fa-solid fa-chart-line"></i>
+              <b>Mais visibilidade</b>
+              <small>Nas buscas locais</small>
+            </div>
+            <div class="stat">
+              <i class="fa-solid fa-phone-volume"></i>
+              <b>Mais contatos</b>
+              <small>Ligações e WhatsApp</small>
+            </div>
+            <div class="stat">
+              <i class="fa-solid fa-route"></i>
+              <b>Mais rotas</b>
+              <small>Clientes indo até você</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-card">
+          <!-- 💡 DICA PARA USAR SEU BANNER/FLYER:
+               Se você preferir exibir a imagem do banner/infográfico que você enviou em vez 
+               deste celular desenhado no código, basta apagar (ou ocultar) a div "business-card" 
+               abaixo e adicionar a sua imagem assim:
+               
+               <img src="nome-do-seu-banner.png" alt="Banner MAPAMAX" style="border-radius: 20px; width: 100%;">
+          -->
+          <div class="business-card">
+            <div class="business-top">
+              <div>
+                <h3>Sua Empresa</h3>
+                <div class="stars">★★★★★ <strong style="color:#111827">5,0</strong> <span style="color:#64748b">(128 avaliações)</span></div>
+                <small style="color:#16a34a;font-weight:800">Aberto agora</small>
+              </div>
+              <i class="fa-solid fa-xmark" style="color:#64748b"></i>
+            </div>
+            <div class="mock-map"></div>
+            <div class="action-row">
+              <div class="action"><i class="fa-solid fa-phone"></i>Ligar</div>
+              <div class="action"><i class="fa-solid fa-route"></i>Rotas</div>
+              <div class="action"><i class="fa-solid fa-bookmark"></i>Salvar</div>
+              <div class="action"><i class="fa-solid fa-globe"></i>Site</div>
+            </div>
+            <p style="margin-top:16px;color:#64748b;font-weight:700"><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> 71 99275-6180</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">O que fazemos</div>
+          <h2>Presença profissional para empresas locais no Google</h2>
+          <p>Ideal para oficinas, salões, restaurantes, lojas, prestadores de serviço, clínicas, autônomos e negócios que querem aparecer melhor no Google Maps.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="card">
+            <div class="icon-box bg-blue"><i class="fa-solid fa-store"></i></div>
+            <h3>Cadastro no Google</h3>
+            <p>Criação e configuração do Perfil da Empresa com dados comerciais, telefone, endereço, horários, categoria e serviços.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon-box bg-red"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+            <h3>Otimização do perfil</h3>
+            <p>Ajuste de descrição, palavras-chave locais, categorias, serviços, fotos e informações para melhorar sua apresentação.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon-box bg-yellow"><i class="fa-solid fa-camera-retro"></i></div>
+            <h3>Fotos e identidade</h3>
+            <p>Orientação e organização visual para deixar sua empresa mais confiável, atrativa e pronta para receber clientes.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon-box bg-green"><i class="fa-solid fa-star"></i></div>
+            <h3>Estratégia de avaliações</h3>
+            <p>Criação de links e materiais para incentivar clientes reais a avaliarem sua empresa no Google.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon-box bg-blue"><i class="fa-solid fa-bullhorn"></i></div>
+            <h3>Anúncios e divulgação</h3>
+            <p>Criação de textos, chamadas e artes para divulgar sua empresa na OLX, redes sociais e Google Perfil da Empresa.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon-box bg-red"><i class="fa-solid fa-mobile-screen"></i></div>
+            <h3>Contato rápido</h3>
+            <p>Configuração de links de WhatsApp, botões de ligação, rotas e canais para facilitar o contato do cliente.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps" id="como-funciona">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Processo simples</div>
+          <h2>Como a MAPAMAX coloca sua empresa no caminho certo</h2>
+          <p>Você envia os dados básicos da empresa e nós organizamos tudo para seu perfil ficar mais profissional.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Coleta de informações</h3>
+            <p>Nome, telefone, endereço, horários, segmento, serviços e fotos do negócio.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Cadastro ou ajuste</h3>
+            <p>Criamos ou otimizamos o perfil existente com foco em buscas locais.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Organização visual</h3>
+            <p>Melhoramos descrição, categorias, serviços, fotos e informações importantes.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Mais contatos</h3>
+            <p>O cliente encontra sua empresa, liga, chama no WhatsApp ou traça a rota.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beneficios">
+      <div class="container benefits-grid">
+        <div class="benefits-panel">
+          <div class="eyebrow" style="color:#fbbc04">Por que estar no Google Maps?</div>
+          <h2 style="font-size:2.6rem;line-height:1.06;letter-spacing:-.05em;margin-bottom:20px">Quem aparece melhor, vende mais.</h2>
+          <p style="color:#d1d5db">A presença no Google Maps ajuda clientes próximos a encontrarem sua empresa no momento em que estão pesquisando por uma solução.</p>
+        </div>
+
+        <div class="check-list">
+          <div class="check-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div><strong>Mais autoridade e confiança</strong><br><span>Um perfil completo transmite profissionalismo antes mesmo do primeiro contato.</span></div>
+          </div>
+          <div class="check-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div><strong>Mais ligações e mensagens</strong><br><span>Botões de contato facilitam a decisão do cliente.</span></div>
+          </div>
+          <div class="check-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div><strong>Mais visitas presenciais</strong><br><span>Clientes podem traçar rota diretamente pelo Google Maps.</span></div>
+          </div>
+          <div class="check-item">
+            <i class="fa-solid fa-circle-check"></i>
+            <div><strong>Destaque da concorrência local</strong><br><span>Informações bem organizadas ajudam sua empresa a se apresentar melhor.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOVA SEÇÃO DE PREÇO AQUI -->
+    <section id="investimento" class="pricing-section">
+      <div class="container">
+        <div class="section-head" style="text-align: center; margin: 0 auto 42px;">
+          <div class="eyebrow">Investimento</div>
+          <h2>Um valor único para resultados contínuos</h2>
+          <p>Sem mensalidades ou taxas ocultas. Você paga uma vez, nós fazemos o serviço e o perfil é 100% seu.</p>
+        </div>
+        
+        <div class="price-card-wrapper">
+          <div class="price-card">
+            <h3 style="font-size: 1.5rem; color: #0f172a;">Pacote MAPAMAX</h3>
+            <div class="price">R$ 269<span>/único</span></div>
+            
+            <div class="ownership-badge">
+              <i class="fa-solid fa-key"></i> Fez e passa a propriedade!
+            </div>
+            
+            <div class="mini-list">
+              <div><i class="fa-solid fa-check"></i> <strong>Propriedade 100% transferida para você</strong></div>
+              <div><i class="fa-solid fa-check"></i> Cadastro completo no Google Perfil da Empresa</div>
+              <div><i class="fa-solid fa-check"></i> Otimização de descrição, serviços e categoria</div>
+              <div><i class="fa-solid fa-check"></i> Configuração de botões de WhatsApp e rotas</div>
+              <div><i class="fa-solid fa-check"></i> Texto para anúncio na OLX e redes sociais</div>
+              <div><i class="fa-solid fa-check"></i> Sem nenhum tipo de mensalidade</div>
+            </div>
+            
+            <a class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 18px; margin-top: 10px;" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20gostaria%20de%20fechar%20o%20pacote%20MAPAMAX%20por%20R%24%20269." target="_blank">
+              <i class="fa-brands fa-whatsapp"></i> Quero cadastrar minha empresa
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="cta">
+      <div class="container cta-box">
+        <div>
+          <h2>Pronto para colocar sua empresa no Google Maps?</h2>
+          <p>Fale com a MAPAMAX e comece a transformar buscas locais em clientes reais.</p>
+        </div>
+        <a class="btn btn-primary" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20quero%20colocar%20minha%20empresa%20no%20Google%20Maps." target="_blank">
+          <i class="fa-brands fa-whatsapp"></i>
+          71 99275-6180
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="brand" style="color:white; filter: brightness(0) invert(1);">
+        <!-- O mesmo logo aqui no rodapé (fica branco automaticamente via CSS) -->
+        <img src="logo.png" alt="MAPAMAX" class="brand-img" onerror="this.style.display='none'">
+        <div><span>MAPA</span><span>M</span><span>A</span><span>X</span></div>
+      </div>
+      <div class="contact-line">
+        <span><i class="fa-brands fa-whatsapp"></i> 71 99275-6180</span>
+        <span><i class="fa-solid fa-location-dot"></i> Atendimento para empresas locais</span>
+      </div>
+      <small>© 2026 MAPAMAX. Serviço independente de marketing local.</small>
+    </div>
+  </footer>
+</body>
+</html>
