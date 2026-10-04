@@ -34,7 +34,7 @@
       --white: #ffffff;
       --border: rgba(255,255,255,.14);
       --shadow: 0 24px 70px rgba(15, 23, 42, .18);
-      --radius: 26px;
+      --radius: 24px;
     }
 
     * {
@@ -144,11 +144,6 @@
       box-shadow: 0 20px 38px rgba(26,115,232,.34);
     }
 
-    .btn-dark {
-      color: white;
-      background: var(--dark);
-    }
-
     .btn-light {
       color: var(--dark);
       background: white;
@@ -164,17 +159,6 @@
         radial-gradient(circle at 85% 20%, rgba(251,188,4,.24), transparent 30%),
         linear-gradient(135deg, #07111f 0%, #0b0f19 55%, #111827 100%);
       padding: 88px 0 74px;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: linear-gradient(to bottom, black, transparent 90%);
     }
 
     .hero-grid {
@@ -200,9 +184,9 @@
     }
 
     .hero h1 {
-      font-size: clamp(2.45rem, 5vw, 5.1rem);
-      line-height: .98;
-      letter-spacing: -0.06em;
+      font-size: clamp(2.45rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
       font-weight: 900;
       margin-bottom: 24px;
     }
@@ -365,6 +349,64 @@
       margin-top: 14px;
     }
 
+    /* Form Section Modern Styling */
+    .form-section {
+      background: #ffffff;
+      position: relative;
+    }
+
+    .form-container {
+      background: #f8fafc;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 32px;
+      padding: 40px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full {
+      grid-column: span 2;
+    }
+
+    .form-group label {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #334155;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      font-family: inherit;
+      font-size: 0.98rem;
+      color: var(--text);
+      transition: 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.15);
+    }
+
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -478,7 +520,6 @@
       margin-top: 3px;
     }
 
-    /* Pricing Section Styles */
     .pricing-section {
       background: #f8fafc;
     }
@@ -631,8 +672,13 @@
       }
 
       .hero-grid,
-      .benefits-grid {
+      .benefits-grid,
+      .form-grid {
         grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: span 1;
       }
 
       .services-grid,
@@ -653,25 +699,25 @@
 
       .nav {
         min-height: 68px;
-        gap: 10px; /* Ajuste para evitar sobreposição */
+        gap: 10px;
       }
 
       .brand {
-        font-size: 1.1rem; /* Reduz fonte da logo */
+        font-size: 1.1rem;
         gap: 8px;
       }
 
       .brand-img {
-        height: 32px; /* Reduz ligeiramente a imagem da logo */
+        height: 32px;
       }
 
       .topbar .btn {
-        padding: 10px 14px; /* Botão mais compacto no topo */
+        padding: 10px 14px;
         font-size: 0.85rem;
       }
 
       .hide-mobile {
-        display: none; /* Esconde texto não essencial no botão em telas menores */
+        display: none;
       }
 
       .hero {
@@ -685,11 +731,6 @@
         grid-template-columns: 1fr;
       }
 
-      .stats {
-        display: grid;
-      }
-
-      /* Removendo a regra de width: 100% que forçava todos os botões a ficarem largos, para não afetar o topo */
       .hero-actions .btn {
         width: 100%;
       }
@@ -700,7 +741,8 @@
 
       .card,
       .benefits-panel,
-      .price-card {
+      .price-card,
+      .form-container {
         padding: 24px;
       }
 
@@ -723,22 +765,21 @@
   <header class="topbar">
     <div class="container nav">
       <a href="#inicio" class="brand" aria-label="MAPAMAX">
-        <!-- Substituímos o ícone de CSS pela imagem do seu logo -->
         <img src="logo.png" alt="MAPAMAX" class="brand-img" onerror="this.style.display='none'">
-        <!-- Caso a imagem falhe (se esquecer de salvar o arquivo logo.png), o texto abaixo aparece -->
         <div><span>MAPA</span><span>M</span><span>A</span><span>X</span></div>
       </a>
 
       <nav class="menu" aria-label="Menu principal">
+        <a href="#cadastro">Cadastrar</a>
         <a href="#servicos">Serviços</a>
         <a href="#como-funciona">Como funciona</a>
         <a href="#beneficios">Benefícios</a>
         <a href="#investimento">Investimento</a>
       </nav>
 
-      <a class="btn btn-primary" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20quero%20colocar%20minha%20empresa%20no%20Google%20Maps." target="_blank" onclick="window.dataLayer.push({'event': 'whatsapp_click', 'location': 'Botão Topo'});">
-        <i class="fa-brands fa-whatsapp"></i>
-        Falar<span class="hide-mobile"> agora</span>
+      <a class="btn btn-primary" href="#cadastro">
+        <i class="fa-solid fa-paper-plane"></i>
+        Cadastrar<span class="hide-mobile"> empresa</span>
       </a>
     </div>
   </header>
@@ -753,8 +794,8 @@
             Cadastramos, configuramos e otimizamos seu Perfil da Empresa no Google para que seu negócio seja encontrado por clientes próximos, gere mais chamadas, rotas e oportunidades.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20servi%C3%A7o%20da%20MAPAMAX." target="_blank" onclick="window.dataLayer.push({'event': 'whatsapp_click', 'location': 'Botão Principal Hero'});">
-              <i class="fa-brands fa-whatsapp"></i> Solicitar atendimento
+            <a class="btn btn-primary" href="#cadastro">
+              <i class="fa-solid fa-file-pen"></i> Preencher cadastro rápido
             </a>
             <a class="btn btn-light" href="#investimento">
               Ver investimento <i class="fa-solid fa-arrow-down"></i>
@@ -781,13 +822,6 @@
         </div>
 
         <div class="phone-card">
-          <!-- 💡 DICA PARA USAR SEU BANNER/FLYER:
-               Se você preferir exibir a imagem do banner/infográfico que você enviou em vez 
-               deste celular desenhado no código, basta apagar (ou ocultar) a div "business-card" 
-               abaixo e adicionar a sua imagem assim:
-               
-               <img src="nome-do-seu-banner.png" alt="Banner MAPAMAX" style="border-radius: 20px; width: 100%;">
-          -->
           <div class="business-card">
             <div class="business-top">
               <div>
@@ -806,6 +840,62 @@
             </div>
             <p style="margin-top:16px;color:#64748b;font-weight:700"><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> 71 99275-6180</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMULÁRIO DE CADASTRO -->
+    <section id="cadastro" class="form-section">
+      <div class="container">
+        <div class="section-head" style="text-align: center; margin: 0 auto 36px;">
+          <div class="eyebrow">Cadastro Rápido</div>
+          <h2>Envie os dados da sua empresa</h2>
+          <p>Preencha os dados abaixo. Eles serão formatados e enviados diretamente para o nosso WhatsApp para darmos início imediato ao cadastro.</p>
+        </div>
+
+        <div class="form-container">
+          <form id="googleMapsForm" onsubmit="sendToWhatsApp(event)">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="companyName">Nome da Empresa *</label>
+                <input type="text" id="companyName" placeholder="Ex: Oficina Auto Auto Tech" required />
+              </div>
+
+              <div class="form-group">
+                <label for="category">Ramo / Categoria *</label>
+                <input type="text" id="category" placeholder="Ex: Mecânica, Salão de Beleza, Restaurante" required />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Telefone / WhatsApp Comercial *</label>
+                <input type="tel" id="phone" placeholder="(71) 99999-9999" required />
+              </div>
+
+              <div class="form-group">
+                <label for="address">Endereço Completo (ou Cidade/Bairro) *</label>
+                <input type="text" id="address" placeholder="Rua, Número, Bairro, Cidade - Estado" required />
+              </div>
+
+              <div class="form-group">
+                <label for="hours">Horário de Funcionamento</label>
+                <input type="text" id="hours" placeholder="Ex: Seg a Sex das 08h às 18h / Sáb das 08h às 12h" />
+              </div>
+
+              <div class="form-group">
+                <label for="services">Principais Serviços / Produtos</label>
+                <input type="text" id="services" placeholder="Ex: Troca de óleo, Revisão, Alinhamento" />
+              </div>
+
+              <div class="form-group full">
+                <label for="notes">Observações ou Dúvidas</label>
+                <textarea id="notes" rows="3" placeholder="Informações adicionais que deseja incluir..."></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 24px; padding: 18px; font-size: 1.05rem;">
+              <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Enviar Cadastro via WhatsApp
+            </button>
+          </form>
         </div>
       </div>
     </section>
@@ -920,7 +1010,6 @@
       </div>
     </section>
 
-    <!-- NOVA SEÇÃO DE PREÇO AQUI -->
     <section id="investimento" class="pricing-section">
       <div class="container">
         <div class="section-head" style="text-align: center; margin: 0 auto 42px;">
@@ -947,7 +1036,7 @@
               <div><i class="fa-solid fa-check"></i> Sem nenhum tipo de mensalidade</div>
             </div>
             
-            <a class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 18px; margin-top: 10px;" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20gostaria%20de%20fechar%20o%20pacote%20MAPAMAX%20por%20R%24%20269." target="_blank" onclick="window.dataLayer.push({'event': 'whatsapp_click', 'location': 'Botão Preços'});">
+            <a class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 18px; margin-top: 10px;" href="https://wa.me/5571992756180?text=Ol%C3%A1%2C%20gostaria%20de%20fechar%20o%20pacote%20MAPAMAX%20por%20R%24%20129." target="_blank" onclick="window.dataLayer.push({'event': 'whatsapp_click', 'location': 'Botão Preços'});">
               <i class="fa-brands fa-whatsapp"></i> Quero cadastrar minha empresa
             </a>
           </div>
@@ -972,7 +1061,6 @@
   <footer>
     <div class="container footer-grid">
       <div class="brand" style="color:white; filter: brightness(0) invert(1);">
-        <!-- O mesmo logo aqui no rodapé (fica branco automaticamente via CSS) -->
         <img src="logo.png" alt="MAPAMAX" class="brand-img" onerror="this.style.display='none'">
         <div><span>MAPA</span><span>M</span><span>A</span><span>X</span></div>
       </div>
@@ -983,5 +1071,41 @@
       <small>© 2026 MAPAMAX. Serviço independente de marketing local.</small>
     </div>
   </footer>
+
+  <script>
+    function sendToWhatsApp(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('companyName').value.trim();
+      const category = document.getElementById('category').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const hours = document.getElementById('hours').value.trim();
+      const services = document.getElementById('services').value.trim();
+      const notes = document.getElementById('notes').value.trim();
+
+      let message = `*NOVO CADASTRO - MAPAMAX*\n\n`;
+      message += `🏢 *Empresa:* ${name}\n`;
+      message += `🏷️ *Categoria:* ${category}\n`;
+      message += `📞 *Telefone:* ${phone}\n`;
+      message += `📍 *Endereço:* ${address}\n`;
+      if (hours) message += `🕒 *Horários:* ${hours}\n`;
+      if (services) message += `🛠️ *Serviços:* ${services}\n`;
+      if (notes) message += `📝 *Observações:* ${notes}\n`;
+
+      const targetPhone = '5571992756180';
+      const encodedMessage = encodeURIComponent(message);
+      
+      // Registrar evento no Google Tag Manager
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          'event': 'whatsapp_click',
+          'location': 'Formulario Cadastro'
+        });
+      }
+
+      window.open(`https://wa.me/${targetPhone}?text=${encodedMessage}`, '_blank');
+    }
+  </script>
 </body>
 </html>
